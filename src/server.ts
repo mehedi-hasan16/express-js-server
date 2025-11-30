@@ -120,6 +120,28 @@ app.get("/users/:id", async (req: Request, res: Response) => {
     });
   }
 });
+//update users
+
+app.put("/users/:id", async (req: Request, res: Response) => {
+  const { name, email } = req.body;
+  const id = req.params.id;
+  try {
+    const result = await pool.query(
+      `UPDATE users SET name = $1, email=$2 WHERE id = $3 RETURNING *`,
+      [name, email, id]
+    );
+    res.status(200).json({
+      success: true,
+      message: "update by id successfully",
+      data: result.rows[0],
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
