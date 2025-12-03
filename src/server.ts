@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 
 import config from "./config";
 import initDB, { pool } from "./config/db";
+import logger from "./middleware/logger";
 
 // const express = require("express");
 const app = express();
@@ -10,9 +11,10 @@ const port = config.port;
 // parser
 app.use(express.json());
 
+//initilizing db
 initDB();
 
-app.get("/", (req: Request, res: Response) => {
+app.get("/", logger, (req: Request, res: Response) => {
   res.send("Hello World! can you refresh auto");
 });
 
