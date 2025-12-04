@@ -3,7 +3,7 @@ import { pool } from "../../config/db";
 import { userServices } from "./user.service";
 
 const createUser = async (req: Request, res: Response) => {
-  const { name, email } = req.body;
+  const { name, email, password } = req.body;
   console.log(req.body);
 
   try {
@@ -12,7 +12,7 @@ const createUser = async (req: Request, res: Response) => {
     //   [name, email]
     // );
 
-    const result = await userServices.createUser(name, email);
+    const result = await userServices.createUser(name, email, password);
     // console.log(result);
     // res.send({ message: "data inserted" });
     res.status(201).json({
